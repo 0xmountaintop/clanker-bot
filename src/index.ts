@@ -4,6 +4,7 @@ import { NeynarAPIManager } from './NeynarAPI';
 import { NotificationManager } from './NotificationManager';
 import { TableDisplay } from './TableDisplay';
 import { TokenDict } from './types';
+import { delay } from './utils';
 
 const program = new Command();
 
@@ -74,6 +75,10 @@ async function checkClanker(verbose: boolean = false): Promise<void> {
       if (verbose) {
         TableDisplay.displayTokens(tokenDicts);
       }
+
+      const waitTime = parseInt(process.env.WAIT_TIME || '5000');
+      console.log(`Sleeping ${waitTime}ms before next check...`);
+      await delay(waitTime);
     }
   } catch (error) {
     console.error('Error during Clanker check:', error);
