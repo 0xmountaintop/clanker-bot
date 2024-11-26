@@ -53,6 +53,12 @@ export class NotificationManager {
       const username = token.creator.username ?? 'Unknown';
       const followerCount = token.creator.neynarData?.user?.follower_count ?? 0;
 
+      console.log(
+        'New Token Created!',
+        `${username} created a token: ${token.name} with ${followerCount} followers.`,
+        token.links.dexscreener
+      );
+
       this.sendNotification(
         'New Token Created!',
         `${username} created a token: ${token.name} with ${followerCount} followers.`,
