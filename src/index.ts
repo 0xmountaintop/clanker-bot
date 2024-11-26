@@ -91,7 +91,7 @@ program
     await checkClanker(options.verbose);
   });
 
-// Handle case when no arguments provided
+// Handle case when no arguments provided (debug mode)
 if (process.argv.length === 2) {
   checkClanker(true);
 } else {
