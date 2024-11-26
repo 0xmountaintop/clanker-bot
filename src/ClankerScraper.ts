@@ -11,7 +11,7 @@ export class ClankerScraper {
     }
 
     const browser = await puppeteer.launch({
-      headless: 'new',
+      headless: true,
       args: ['--no-sandbox', '--disable-dev-shm-usage']
     });
 
@@ -62,9 +62,21 @@ export class ClankerScraper {
         const imageUrl = $(element).find('img[class*="w-full"][class*="h-full"]').attr('src') || '';
 
         const links = $(element).find('a[href]');
-        const dexscreenerUrl = links.filter((_, el) => $(el).attr('href')?.includes('dexscreener.com')).attr('href') || '';
-        const basescanUrl = links.filter((_, el) => $(el).attr('href')?.includes('basescan.org')).attr('href') || '';
-        const clankerPageUrl = links.filter((_, el) => $(el).attr('href')?.includes('/clanker/')).attr('href') || '';
+        
+        const dexscreenerUrl = links
+          .filter((_, el) => ($(el).attr('href')?.includes('dexscreener.com') ?? false))
+          .first()
+          .attr('href') || '';
+          
+        const basescanUrl = links
+          .filter((_, el) => ($(el).attr('href')?.includes('basescan.org') ?? false))
+          .first()
+          .attr('href') || '';
+          
+        const clankerPageUrl = links
+          .filter((_, el) => ($(el).attr('href')?.includes('/clanker/') ?? false))
+          .first()
+          .attr('href') || '';
 
         tokens.push({
           name,
