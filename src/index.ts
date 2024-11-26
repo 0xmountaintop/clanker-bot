@@ -58,20 +58,23 @@ async function checkClanker(verbose: boolean = false): Promise<void> {
       console.log('Starting Clanker check...');
     }
 
-    const html = await scraper.getDynamicPageContent(verbose);
-    const tokens = await scraper.parseClankerPage(html, verbose);
-    
-    // Format tokens and fetch additional data
-    const tokenDicts = await Promise.all(
-      tokens.map(token => formatTokenDict(token, neynar))
-    );
+    while (true) {
+      const html = await scraper.getDynamicPageContent(verbose);
+      const tokens = await scraper.parseClankerPage(html, verbose);
 
-    // Process notifications
-    await notificationManager.processNewTokens(tokenDicts);
+      // Format tokens and fetch additional data
+      const tokenDicts = await Promise.all(
+        tokens.map(token => formatTokenDict(token, neynar))
+      );
 
-    // Display results
-    TableDisplay.displayTokens(tokenDicts);
+      // Process notifications
+      await notificationManager.processNewTokens(tokenDicts);
 
+      // Display results
+      if (verbose) {
+        TableDisplay.displayTokens(tokenDicts);
+      }
+    }
   } catch (error) {
     console.error('Error during Clanker check:', error);
     process.exit(1);
