@@ -3,4 +3,8 @@
 
 ## TODO
 
-- [ ] Add neynar client
+- [ ] Add sniper bot
+- [ ] Test neynar client
+- [ ] Save to file?
+
+
