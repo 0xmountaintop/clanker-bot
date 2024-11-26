@@ -1,18 +1,15 @@
 import axios from 'axios';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import { neynarApiKey, neynarSignerUUID } from './config';
 
 export class NeynarAPIManager {
   private readonly apiKey: string;
   private readonly baseUrl: string = 'https://api.neynar.com/v2';
 
   constructor() {
-    const apiKey = process.env.NEYNAR_API_KEY;
-    if (!apiKey) {
+    if (!neynarApiKey) {
       throw new Error('NEYNAR_API_KEY environment variable is required');
     }
-    this.apiKey = apiKey;
+    this.apiKey = neynarApiKey;
   }
 
   async getUserByUsername(username: string): Promise<any> {
@@ -34,15 +31,14 @@ export class NeynarAPIManager {
 
   async postCast(text: string): Promise<boolean> {
     try {
-      const signerUuid = process.env.NEYNAR_SIGNER_UUID;
-      if (!signerUuid) {
+      if (!neynarSignerUUID) {
         throw new Error('NEYNAR_SIGNER_UUID environment variable is required');
       }
 
       await axios.post(
         `${this.baseUrl}/farcaster/cast`,
         {
-          signer_uuid: signerUuid,
+          signer_uuid: neynarSignerUUID,
           text: text,
         },
         {

@@ -1,4 +1,5 @@
 import { Command } from 'commander';
+import { waitTime } from './config';
 import { ClankerScraper } from './ClankerScraper';
 import { NeynarAPIManager } from './NeynarAPI';
 import { NotificationManager } from './NotificationManager';
@@ -76,7 +77,6 @@ async function checkClanker(verbose: boolean = false): Promise<void> {
         TableDisplay.displayTokens(tokenDicts);
       }
 
-      const waitTime = parseInt(process.env.WAIT_TIME || '5000');
       console.log(`Sleeping ${waitTime}ms before next check...`);
       await delay(waitTime);
     }
